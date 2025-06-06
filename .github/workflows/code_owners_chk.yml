@@ -11,15 +11,20 @@ on:
 jobs:
   check-codeowners:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      - name: Run CODEOWNER check
+      - name: Debug - List scripts directory
+        run: ls -la .github/scripts
+
+      - name: Run CODEOWNER approval check
         run: python .github/scripts/check_codeowners.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
