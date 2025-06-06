@@ -21,6 +21,9 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Install dependencies
+        run: pip install requests
+
       - name: Debug - List scripts directory
         run: ls -la .github/scripts
 
