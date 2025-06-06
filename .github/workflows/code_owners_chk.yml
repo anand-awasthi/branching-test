@@ -1,0 +1,27 @@
+name: Enforce 2 CODEOWNER Approvals
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - qa
+      - main
+    types: [opened, reopened, synchronize, submitted]
+
+jobs:
+  check-codeowners:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run CODEOWNER check
+        run: python .github/scripts/check_codeowners.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
